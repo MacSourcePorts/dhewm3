@@ -54,7 +54,7 @@ fi
 lipo build-x86_64/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME} build-arm64/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME} -output "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME}" -create
 lipo build-x86_64/base.dylib build-arm64/base.dylib -output "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/base/base.dylib" -create
 
-cp /Users/tomkidd/Documents/GitHub/MSPStore/Cellar/sdl2/2.0.16/lib/libSDL2-2.0.0.dylib "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}"
+cp /Users/tomkidd/Documents/GitHub/MSPStore/lib/libSDL2-2.0.0.dylib "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}"
 cp /Users/tomkidd/Documents/GitHub/MSPStore/Cellar/openal-soft/1.21.1/lib/libopenal.1.dylib "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}"
 
 # use install_name tool to point executable to bundled resources (probably wrong long term way to do it)
