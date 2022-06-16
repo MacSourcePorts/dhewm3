@@ -4,7 +4,7 @@ dhewm3 Changelog
 Note: Numbers starting with a "#" like #330 refer to the bugreport with that number
       at https://github.com/dhewm/dhewm3/issues/
 
-1.5.2 (WIP)
+1.5.2 (2022-06-13)
 ------------------------------------------------------------------------
 
 * Gamma and Brightness are now applied in the shaders instead of by setting hardware gamma.  
@@ -14,8 +14,8 @@ Note: Numbers starting with a "#" like #330 refer to the bugreport with that num
       Original Doom3 didn't have it (Quake4 did), but the Doom3 GPL source contained
       most of it. *HarrievG* implemented the missing parts and we added some new
       features. It can even be used over the network and while the client part
-      (the debugger GUI) is Windows-only, the server can even run on all supported
-      platforms, so you can even debug a game running on Linux or macOS, for example.  
+      (the debugger GUI) is Windows-only, the server can run on all supported
+      platforms, so you can debug a game running on Linux or macOS, for example.  
       Relevant CVars for network debugging are:
       `com_enableDebuggerServer` and `com_dbgClientAdr` and `com_dbgServerAdr`.  
       To debug the running game on the same PC, just enter `debugger` in the console.
@@ -36,7 +36,7 @@ Note: Numbers starting with a "#" like #330 refer to the bugreport with that num
       by using scancodes for otherwise unknown keys
     - Support typing in non-ASCII characters, if supported by Doom3 (it supports ISO-8859-1)
     - Support the clipboard also on non-Windows platforms  
-      You can paste code from the clipboard into the console or other edit fields
+      You can paste text from the clipboard into the console or other edit fields
       with `Shift+Insert`
     - Explicit support for Right Ctrl, Alt and Shift keys  
       (can be bound to different actions than their left counterparts)
@@ -47,6 +47,10 @@ Note: Numbers starting with a "#" like #330 refer to the bugreport with that num
       bound to an action (and its char can be typed in the console without closing it).
     - Added (SDL2-only) "auto" option for `in_kbd`: When not disabling the console key,
       dhewm3 will try to automatically detect it if `in_kbd` is set to "auto" (now default)
+* Reworked mouse-input and -grabbing code, using absolute mouse mode in fullscreen GUIs
+  (except for the PDA, because it's implemented weirdly).  
+  This made releasing the mouse in the main menu possible, as now the ingame cursor
+  is at the same position as the system cursor.
 * `s_alReverbGain` CVar to reduce EFX reverb effect intensity (#365)
 * Pause (looped) sounds when entering menu (#330)
 * Fixes for looped sounds (#390)
@@ -56,6 +60,7 @@ Note: Numbers starting with a "#" like #330 refer to the bugreport with that num
 * (Optionally) use libbacktrace on non-Windows platforms for more useful
   backtraces in case of crashes (usually linked statically)
 * Fixed a deadlock (freeze) on Windows when printing messages from another thread
+* Fixed endless loop (game locking up at startup) if graphics settings couldn't be applied (#386)
 * Fixed some warnings and uninitialized variables (thanks *turol*!)
 * Work around dmap bug caused by GCC using FMA "optimizations" (#147)
 * Prevent dhewm3 from being run as root on Unix-like systems to improve security
@@ -68,7 +73,13 @@ Note: Numbers starting with a "#" like #330 refer to the bugreport with that num
     - On Mac it's in `$HOME/Library/Application Support/dhewm3/`
     - On other Unix-like systems like Linux it's in `$XDG_DATA_HOME/dhewm3/`
       (usually `$HOME/.local/share/dhewm3/`)
-
+* Improved compatibility with Wayland (#426)
+* Work around assertion in AlphaLabs4 due to "ride_of_death" yeeting
+  the dead "monster_zsec_shotgun_12" into the void (#409)
+* Support loading some mods known to need `fs_game_base d3xp` via Mods menu
+  (currently, *The Lost Mission* and *LibreCoop d3xp* are supported)
+* Disable assertion in idSampleDecoderLocal::DecodeOGG() that triggered
+  when starting a new Classic Doom3 game (#461)
 
 1.5.1 (2021-03-14)
 ------------------------------------------------------------------------
@@ -90,7 +101,7 @@ Note: Numbers starting with a "#" like #330 refer to the bugreport with that num
   and [The Lost Mission](https://www.moddb.com/mods/the-lost-mission).  
   See https://dhewm3.org/mods.html for more details.
 * dhewm3 now supports the **Doom3 Demo** gamedata
-    - See [below](#using-the-doom3-demo-gamedata) for installation instructions
+    - See [here](https://dhewm3.org/#using-the-doom3-demo-gamedata) for installation instructions
     - This is based on *Gabriel Cuvillier's* code for [D3Wasm](http://www.continuation-labs.com/projects/d3wasm/),
       which ports dhewm3 to web browsers, thanks!
 * Create the game window on the display the cursor is currently on (when using more than one display)
