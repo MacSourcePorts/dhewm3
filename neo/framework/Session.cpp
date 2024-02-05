@@ -879,7 +879,7 @@ void idSessionLocal::StopPlayingRenderDemo() {
 		float	demoFPS = numDemoFrames / demoSeconds;
 		idStr	message = va( "%i frames rendered in %3.1f seconds = %3.1f fps\n", numDemoFrames, demoSeconds, demoFPS );
 
-		common->Printf( message );
+		common->Printf( "%s", message.c_str() );
 		if ( timeDemo == TD_YES_THEN_QUIT ) {
 			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "quit\n" );
 		} else {
@@ -1447,6 +1447,9 @@ void idSessionLocal::UnloadMap() {
 	}
 
 	mapSpawned = false;
+
+	// DG: that state needs to be reset now
+	Sys_SetInteractiveIngameGuiActive( false, NULL );
 }
 
 /*
@@ -2628,6 +2631,7 @@ idSessionLocal::Frame
 ===============
 */
 extern bool CheckOpenALDeviceAndRecoverIfNeeded();
+extern int g_screenshotFormat;
 void idSessionLocal::Frame() {
 
 	if ( com_asyncSound.GetInteger() == 0 ) {
@@ -2666,6 +2670,7 @@ void idSessionLocal::Frame() {
 			// skipped frames so write them out
 			int c = aviDemoFrameCount - aviTicStart;
 			while ( c-- ) {
+				g_screenshotFormat = 0;
 				renderSystem->TakeScreenshot( com_aviDemoWidth.GetInteger(), com_aviDemoHeight.GetInteger(), name, com_aviDemoSamples.GetInteger(), NULL );
 				name = va("demos/%s/%s_%05i.tga", aviDemoShortName.c_str(), aviDemoShortName.c_str(), ++aviTicStart );
 			}
@@ -2676,6 +2681,7 @@ void idSessionLocal::Frame() {
 		console->ClearNotifyLines();
 
 		// this will call Draw, possibly multiple times if com_aviDemoSamples is > 1
+		g_screenshotFormat = 0;
 		renderSystem->TakeScreenshot( com_aviDemoWidth.GetInteger(), com_aviDemoHeight.GetInteger(), name, com_aviDemoSamples.GetInteger(), NULL );
 	}
 

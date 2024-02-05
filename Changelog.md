@@ -4,6 +4,30 @@ dhewm3 Changelog
 Note: Numbers starting with a "#" like #330 refer to the bugreport with that number
       at https://github.com/dhewm/dhewm3/issues/
 
+1.5.3 (WIP)
+------------------------------------------------------------------------
+
+* Support for gamepads (based on code from [Quadrilateral Cowboy](https://github.com/blendogames/quadrilateralcowboy),
+  but heavily expanded). See [Configuration.md](./Configuration.md#using-gamepads) for more information.
+* Support different file formats for screenshots by setting the `r_screenshotFormat` CVar
+  (0 = TGA, still the default, 1 = BMP, 2 = PNG, 3 = JPG). `r_screenshotJpgQuality` and
+  `r_screenshotPngCompression` allow configuring how JPG/PNG are compressed.
+  Thanks *eezstreet (Nick Whitlock)*!
+* Fixed problems with lights after loading a savegame (#495)
+* Fix volume of some weapon sounds, like chaingun being too quit (#326)
+* Increase stack size on Windows to 8MB (instead default of 1MB) to make loading huge models work
+* Fixed crash in Radiant Model Preview Dialog (#496)
+* Fix MD3 model support
+* Several new CMake options:
+    - To enable Clang/GCC Address Sanitizer and Undefined Behavior Sanitizer
+    - Hardlink the game code into the executable (instead of using game DLLs,
+      only supports base *or* d3xp then; needed for Undefined Behavior Sanitizer)
+    - Force colored diagnostic output from GCC or Clang (esp. useful when building with ninja)
+* Fix several compiler warnings
+* Added build instructions for Linux (and similar systems) to README.md
+* Updated stb_image and stb_vorbis
+
+
 1.5.2 (2022-06-13)
 ------------------------------------------------------------------------
 
